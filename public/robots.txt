@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://dhanlaxmi-printing-press.vercel.app/sitemap.xml
