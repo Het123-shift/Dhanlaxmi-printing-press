@@ -1,0 +1,129 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --color-navy: #101b36;
+    --color-navy-dark: #0a1124;
+    --color-royal: #214e9a;
+    --color-gold: #c9a227;
+    --color-gold-light: #dfba47;
+    --color-gold-dark: #9e7a17;
+    --color-cream: #faf7f0;
+    --color-cream-dark: #f0ebd9;
+    --font-serif-heading: 'Playfair Display', Georgia, serif;
+    --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    --font-gujarati: 'Noto Sans Gujarati', 'Shruti', 'Gujarati Sangam MN', sans-serif;
+  }
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  color: #1e293b;
+  background-color: #faf7f0;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.font-gujarati {
+  font-family: var(--font-gujarati);
+}
+
+.font-serif {
+  font-family: var(--font-serif-heading);
+}
+
+/* Subtle Indian Architectural Motif Backgrounds */
+.bg-mandala-subtle {
+  background-color: #101b36;
+  background-image: radial-gradient(circle at 50% 50%, rgba(201, 162, 39, 0.06) 1px, transparent 1px),
+    radial-gradient(circle at 0% 0%, rgba(33, 78, 154, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 100% 100%, rgba(201, 162, 39, 0.08) 0%, transparent 50%);
+  background-size: 24px 24px, 100% 100%, 100% 100%;
+}
+
+.bg-ivory-pattern {
+  background-color: #faf7f0;
+  background-image: radial-gradient(rgba(201, 162, 39, 0.12) 1px, transparent 0);
+  background-size: 20px 20px;
+}
+
+/* CMYK Registration Mark & Fine Accents */
+.cmyk-border-top {
+  position: relative;
+}
+.cmyk-border-top::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #00aeef 25%, #ec008c 25% 50%, #fff200 50% 75%, #231f20 75%);
+}
+
+.cmyk-bar {
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
+}
+.cmyk-dot-c { width: 8px; height: 8px; border-radius: 50%; background-color: #00aeef; }
+.cmyk-dot-m { width: 8px; height: 8px; border-radius: 50%; background-color: #ec008c; }
+.cmyk-dot-y { width: 8px; height: 8px; border-radius: 50%; background-color: #fff200; border: 1px solid rgba(0,0,0,0.1); }
+.cmyk-dot-k { width: 8px; height: 8px; border-radius: 50%; background-color: #231f20; }
+
+/* Custom Fine Gold Borders */
+.border-gold-subtle {
+  border-color: rgba(201, 162, 39, 0.35);
+}
+
+.gold-gradient-text {
+  background: linear-gradient(135deg, #c9a227 0%, #e6c86e 50%, #a78018 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gold-gradient-bg {
+  background: linear-gradient(135deg, #c9a227 0%, #dfba47 50%, #b8911e 100%);
+}
+
+/* Glassmorphism surfaces */
+.glass-surface {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+.glass-surface-dark {
+  background: rgba(16, 27, 54, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(201, 162, 39, 0.2);
+}
+
+/* Card Elevation & Hover animations */
+.premium-card {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.premium-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 30px -10px rgba(16, 27, 54, 0.12);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #faf7f0;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #c9a227;
+}
