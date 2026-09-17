@@ -18,30 +18,58 @@ import { ContactPage } from './pages/ContactPage';
 import { AdminPage } from './pages/AdminPage';
 import { TrackQuotePage } from './pages/TrackQuotePage';
 import type { Language, ServiceItem } from './data/content';
+import { updatePageMetadata } from './utils/seo';
+
+function parseRouteFromLocation(): string {
+  // 1. If an old hash exists (e.g. /#/about or #/services), migrate it
+  if (window.location.hash) {
+    const rawHash = window.location.hash.replace(/^#\/?/, '').trim();
+    if (rawHash) {
+      // Normalize 'home' hash to ''
+      const targetPath = rawHash === 'home' ? '/' : `/${rawHash}`;
+      // Clean up the URL in address bar without reloading
+      window.history.replaceState(null, '', targetPath);
+      return rawHash;
+    }
+  }
+
+  // 2. Parse from window.location.pathname
+  const path = window.location.pathname.replace(/^\/+|\/+$/g, '');
+  if (!path) {
+    return 'home';
+  }
+  return path;
+}
 
 export function App() {
-  const [currentRoute, setCurrentRoute] = React.useState<string>('home');
+  const [currentRoute, setCurrentRoute] = React.useState<string>(parseRouteFromLocation);
   const [lang, setLang] = React.useState<Language>('en');
   const [selectedServiceForQuote, setSelectedServiceForQuote] = React.useState<ServiceItem | null>(null);
 
+  // Sync SEO metadata whenever currentRoute changes
   React.useEffect(() => {
-    const handleHashChange = () => {
-      const hash = window.location.hash.replace('#/', '').replace('#', '');
-      if (hash) {
-        setCurrentRoute(hash);
-      } else {
-        setCurrentRoute('home');
-      }
+    updatePageMetadata(currentRoute);
+  }, [currentRoute]);
+
+  // Handle browser back / forward navigation
+  React.useEffect(() => {
+    const handlePopState = () => {
+      const route = parseRouteFromLocation();
+      setCurrentRoute(route);
     };
 
-    handleHashChange();
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
   const navigate = (route: string) => {
-    setCurrentRoute(route);
-    window.location.hash = `#/${route}`;
+    const normalizedRoute = route === 'home' || route === '' ? 'home' : route;
+    setCurrentRoute(normalizedRoute);
+
+    const targetPath = normalizedRoute === 'home' ? '/' : `/${normalizedRoute}`;
+    if (window.location.pathname !== targetPath) {
+      window.history.pushState(null, '', targetPath);
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
